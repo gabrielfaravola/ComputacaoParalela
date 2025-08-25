@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 
 #define VECTOR_SIZE 200000000
-#define NUM_PROCESSES 4  // Defina quantos processos deseja usar
+#define NUM_PROCESSES 4
 
 // Função que simula uma carga de trabalho pesada
 void heavy_work(double *vector, int start, int end) {
@@ -50,7 +50,7 @@ int main() {
 
     struct timespec start_time, end_time;
 
-    // Versão sequencial
+    //Versão sequencial
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     heavy_work(vector, 0, VECTOR_SIZE);
     clock_gettime(CLOCK_MONOTONIC, &end_time);
@@ -61,7 +61,7 @@ int main() {
     // Recarregar o vetor para não pegar resultados prontos
     for (int i = 0; i < VECTOR_SIZE; i++) vector[i] = (double) i;
 
-    // Versão paralela
+    //Versão paralela
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     paralelismo_work(vector, 0, VECTOR_SIZE);
     clock_gettime(CLOCK_MONOTONIC, &end_time);
