@@ -48,7 +48,7 @@ void paralelismo_work(double *vector, int start, int end) {
 int main() {
     double *vector = (double *) malloc(VECTOR_SIZE * sizeof(double));
     for (int i = 0; i < VECTOR_SIZE; i++) vector[i] = (double) i;
-
+    
     struct timespec start_time, end_time;
 
     // Versão sequencial
@@ -57,7 +57,7 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &end_time);
     double time_seq = (end_time.tv_sec - start_time.tv_sec) +
                       (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
-    printf("Versão sequencial executou em %f segundos\n", time_seq);
+    printf("Versão sequencial executou em %f segundos\n.", time_seq);
 
     // Recarregar o vetor
     for (int i = 0; i < VECTOR_SIZE; i++) vector[i] = (double) i;
@@ -68,10 +68,13 @@ int main() {
     clock_gettime(CLOCK_MONOTONIC, &end_time);
     double time_par = (end_time.tv_sec - start_time.tv_sec) +
                       (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
-    printf("Versão paralela executou em %f segundos\n", time_par);
+    printf("Versão paralela executou em %f segundos.\n", time_par);
 
     // Verificação
     printf("Resultado de verificacao: vector[10] = %f\n", vector[10]);
+
+    double speedup = time_seq/time_par;
+    printf("O programa foi %fx mais rápido.\n",speedup);
 
     free(vector);
     return 0;
