@@ -25,14 +25,15 @@ void paralelismo_work(double *vector, int start, int end) {
         int local_end = (i == NUM_PROCESSES - 1) ? end : local_start + chunk_size;
 
         pid_t pid = fork();
-        if (pid == 0) {
-            // Processo filho
+        
+        if (pid == 0) { // Processo filho
             heavy_work(vector, local_start, local_end);
             exit(0);
-        } else if (pid > 0) {
-            // Processo pai: armazena o PID
+            
+        } else if (pid > 0) { // Processo pai
             pids[i] = pid;
-        } else {
+            
+        } else { // Erro na criação do processo
             perror("fork");
             exit(1);
         }
@@ -50,7 +51,7 @@ int main() {
 
     struct timespec start_time, end_time;
 
-    //Versão sequencial
+    // Versão sequencial
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     heavy_work(vector, 0, VECTOR_SIZE);
     clock_gettime(CLOCK_MONOTONIC, &end_time);
@@ -58,10 +59,10 @@ int main() {
                       (end_time.tv_nsec - start_time.tv_nsec) / 1e9;
     printf("Versão sequencial executou em %f segundos\n", time_seq);
 
-    // Recarregar o vetor para não pegar resultados prontos
+    // Recarregar o vetor
     for (int i = 0; i < VECTOR_SIZE; i++) vector[i] = (double) i;
 
-    //Versão paralela
+    // Versão paralela
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     paralelismo_work(vector, 0, VECTOR_SIZE);
     clock_gettime(CLOCK_MONOTONIC, &end_time);
