@@ -1,18 +1,33 @@
 #include <stdio.h>
 #include <omp.h>
-#define MAX 100
+#include <stdlib.h>
+
+#define TAM_VECTOR 100000000
 
 int main(){
-    int A[MAX],B[MAX],C[MAX];
+	long *A = malloc(TAM_VECTOR * sizeof(long));
+    long *B = malloc(TAM_VECTOR * sizeof(long));
+	long *C = malloc(TAM_VECTOR * sizeof(long));
+	
+	for(long i = 0; i < TAM_VECTOR; i++){
+		A[i] = i;
+		B[i] = i;
+	}
+	
+	double start = omp_get_wtime();
 
-    for(int i = 0; i<MAX; i++){
-        A[i] = i;
-        B[i] = i;
-    }
+	#pragma omp parallel for	
+	for(long i = 0; i < TAM_VECTOR; i++){
+		C[i] = A[i] + B[i];
+	}
 
-    #pragma omp parallel for
-    for(int i = 0; i<MAX; i++) C[i] = A[i] + B[i];
+	double end = omp_get_wtime();
 
-    #pragma omp parallel for
-    for(int i = 0; i<MAX; i++) printf("%d\n",C[i]);
+	printf("Tempo = %f.\n", end-start);
+
+	free(A);
+	free(B);
+	free(C);
+
+   	return 0;
 }
