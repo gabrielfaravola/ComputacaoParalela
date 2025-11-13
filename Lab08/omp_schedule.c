@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <omp.h>
-#include <unistd.h> // para usleep
+#include <unistd.h>
 
 #define N 16
 #define CHUNK_SIZE 2
@@ -10,7 +10,6 @@ int main () {
     printf ("---Testando schedule (static, %d) ---\n", CHUNK_SIZE);
     #pragma omp parallel for schedule (static , CHUNK_SIZE )
     for (int i = 0; i < N; ++i){
-        // Simula uma carga de trabalho que aumenta com ’i’
         usleep (( i % 4) * 10000) ;
         printf ("Thread %d processou a iteracao %d\n", omp_get_thread_num(), i);
     }
