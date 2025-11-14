@@ -22,6 +22,7 @@ int main() {
     double start, end;
     omp_set_num_threads(NUM_THREADS);
 
+    // Static no chunk
     load_matrix();
     start = omp_get_wtime();
     
