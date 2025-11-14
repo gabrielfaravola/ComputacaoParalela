@@ -22,11 +22,10 @@ int main() {
     double start, end;
     omp_set_num_threads(NUM_THREADS);
 
-    // --- Static, 1 ---
     load_matrix();
     start = omp_get_wtime();
     
-    #pragma omp parallel for schedule(static,1)
+    #pragma omp parallel for schedule(static)
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             for(int k = 0; k < N; k++){
@@ -36,7 +35,25 @@ int main() {
     }
 
     end = omp_get_wtime();
-    printf("Tempo Static = %f segundos.\n", end - start);
+    printf("Static time (No chunk) = %f seconds.\n", end - start);
+    start = 0;
+    end = 0;
+
+    // --- Static, 1 ---
+    load_matrix();
+    start = omp_get_wtime();
+    
+    #pragma omp parallel for schedule(static, 1)
+    for(int i = 0; i < N; i++){
+        for(int j = 0; j < N; j++){
+            for(int k = 0; k < N; k++){
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    end = omp_get_wtime();
+    printf("Static time = %f seconds.\n", end - start);
     start = 0;
     end = 0;
 
@@ -45,7 +62,7 @@ int main() {
     load_matrix();
     start = omp_get_wtime();
     
-    #pragma omp parallel for schedule(dynamic,1)
+    #pragma omp parallel for schedule(dynamic, 1)
     for(int i = 0; i < N; i++){
         for(int j = 0; j < N; j++){
             for(int k = 0; k < N; k++){
@@ -55,7 +72,7 @@ int main() {
     }
 
     end = omp_get_wtime();
-    printf("Tempo Dynamic = %f segundos.\n", end - start);
+    printf("Dynamic time = %f seconds.\n", end - start);
     start = 0; 
     end = 0;
     
@@ -74,7 +91,7 @@ int main() {
     }
 
     end = omp_get_wtime();
-    printf("Tempo Guided = %f segundos.\n", end - start);
+    printf("Guided time = %f seconds.\n", end - start);
     start = 0;
     end = 0;
 
