@@ -37,8 +37,6 @@ int main() {
 
     end = omp_get_wtime();
     printf("Static time (No chunk) = %f seconds.\n", end - start);
-    start = 0;
-    end = 0;
 
     // --- Static, 1 ---
     load_matrix();
@@ -55,10 +53,8 @@ int main() {
 
     end = omp_get_wtime();
     printf("Static time = %f seconds.\n", end - start);
-    start = 0;
-    end = 0;
 
-
+    
     // --- Dynamic, 1 ---
     load_matrix();
     start = omp_get_wtime();
@@ -74,9 +70,7 @@ int main() {
 
     end = omp_get_wtime();
     printf("Dynamic time = %f seconds.\n", end - start);
-    start = 0; 
-    end = 0;
-    
+  
 
     // --- Guided ---
     load_matrix();
@@ -93,8 +87,6 @@ int main() {
 
     end = omp_get_wtime();
     printf("Guided time = %f seconds.\n", end - start);
-    start = 0;
-    end = 0;
 
     return 0;
 }
