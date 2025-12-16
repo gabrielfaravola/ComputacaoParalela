@@ -91,7 +91,6 @@ void mm_blocked_parallel(int N) {
 }
 
 
-// --- Função Principal (Controlador) ---
 int main(int argc, char** argv) {
     int N = (argc > 1) ? atoi(argv[1]) : N_DEFAULT;
     
@@ -118,6 +117,6 @@ int main(int argc, char** argv) {
     double end_time = omp_get_wtime();
     printf("Tempo total: %f segundos\n", end_time - start_time);
 
-    // Liberar memória (omitido para brevidade)
     return 0;
+
 }
