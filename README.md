@@ -81,7 +81,7 @@ perf stat ./arquivo.exe
 
 ## 📂 Organização do Repositório
 
-Cada laboratório contém:
+Nos laboratório contém:
 
 * Código-fonte em **C**
 * Versões sequencial e paralela (quando aplicável)
