@@ -6,7 +6,7 @@
 #define CHUNK_SIZE 2
 
 int main () {
-
+    printf("Chunk size = %d\n\n",CHUNK_SIZE);
     printf ("---Testando schedule (static, %d) ---\n", CHUNK_SIZE);
     #pragma omp parallel for schedule (static , CHUNK_SIZE )
     for (int i = 0; i < N; ++i){
@@ -37,5 +37,7 @@ int main () {
         usleep ((i % 4) * 10000) ;
         printf ("Thread %d processou a iteracao %d\n", omp_get_thread_num(), i);
     }
+
+    printf ("\n");
     return 0;
 }
